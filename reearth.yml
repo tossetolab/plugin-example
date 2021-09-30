@@ -1,0 +1,31 @@
+id: reearth-plugin-example
+name: Example Plug-in
+version: 1.0.0
+extensions:
+  - id: iss
+    type: widget
+    name: ISS Widget
+    widgetLayout:
+      extendable:
+        horizontally: true
+        vertically: true
+  - id: text
+    type: widget
+    name: Text Widget
+    schema:
+      groups:
+        - id: default
+          fields:
+            - id: text
+              type: string
+              title: Text
+  - id: map
+    type: block
+    name: Map Block
+    schema:
+      groups:
+        - id: default
+          fields:
+            - id: location
+              type: latlng
+              title: Location
