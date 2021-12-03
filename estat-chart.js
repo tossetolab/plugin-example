@@ -5,19 +5,12 @@ const html = `
 <script>
   let property, chart, estatdata;
 
+  //Fetch data from e-Stat API
   function fetchData() {
     if (estatdata) return Promise.resolve(estatdata);
     if (!property) return Promise.resolve();
 
-    return fetch(
-      "https://api.e-stat.go.jp/rest/3.0/app/json/getStatsData?lang=J&statsDataId=0003410379&metaGetFlg=Y&cntGetFlg=N&explanationGetFlg=Y&annotationGetFlg=Y&sectionHeaderFlg=1&replaceSpChars=0&appId=" + property.appId
-    ).then(r => {
-      if (r.ok) return r.json();
-    }).then(r => {
-      if (!r) return;
-      estatdata = r;
-      return r;
-    });
+    //WORKSHOP3
   }
 
   function calcData(data) {
@@ -44,11 +37,7 @@ const html = `
   }
 
   function updateChart() {
-    return fetchData().then(d => {
-      if (!d || !chart) return;
-      chart.data = calcData(d);
-      chart.update();
-    });
+    //WORKSHOP4
   }
 
   document.getElementById("chartjs").addEventListener("load", () => {
@@ -71,15 +60,9 @@ const html = `
     updateChart();
   });
 
+  //Recieve data from Re:Earth
   window.addEventListener("message", e => {
-    if (e.source !== parent) return;
-
-    property = e.data;
-    if (property.area) {
-      property.area = ("0" + property.area).slice(-2) + "000";
-    }
-
-    updateChart();
+    // WORKSHOP2
   });
 </script>
 `;
@@ -88,8 +71,7 @@ reearth.ui.show(html);
 reearth.on("update", send);
 send();
 
+//Send property data to iframe
 function send() {
-  if (reearth.block?.property?.default) {
-    reearth.ui.postMessage(reearth.block.property.default);
-  }
+  //WORKSHOP1
 }
